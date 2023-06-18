@@ -4,7 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args) {
@@ -12,7 +13,8 @@ public class App {
         String fileName = "C:\\Users\\eliam\\code\\programmeren 4\\programmeren 4\\src\\studentData_v1.json";
 
         // ArrayList om de studentgegevens op te slaan
-        ArrayList<Student> studenten = new ArrayList<>();
+        List<Student> studenten = new ArrayList<>();
+        List<Vakken> behaaldeCijfers = new ArrayList<>();
 
         // JSON-parser initialiseren
         JSONParser parser = new JSONParser();
@@ -25,6 +27,13 @@ public class App {
             for (Object obj : studentenArray) {
                 JSONObject studentObj = (JSONObject) obj;
 
+                for (Object obje : behaaldeCijfers){
+                    JSONObject studentObje = (JSONObject) obje;
+                    String vakcode = (String) studentObje.get("vakcode");
+                    Integer cijfer = (Integer) studentObje.get("cijfer");
+                    Vakken vakken = new Vakken(vakcode, cijfer);
+                }
+
                 // Studentgegevens uit het JSON-object halen
                 String studentnummer = (String) studentObj.get("studentnummer");
                 String naam = (String) studentObj.get("naam");
@@ -33,14 +42,15 @@ public class App {
                 String studiejaar = (String) studentObj.get("studiejaar");
 
                 // Aanmaken van Student-object en toevoegen aan de ArrayList
-                Student student = new Student(studentnummer, naam, klas, studierichting, studiejaar);
+                Student student = new Student(studentnummer, naam, klas, studierichting, studiejaar, behaalde_cijfers);
                 studenten.add(student);
             }
 
-            // Verifieer of de gegevens correct zijn ingelezen
-            for (Student student : studenten) {
-                System.out.println(student);
-            }
+            List<Student> klasFilter = studenten.stream()
+            .filter(student -> student.klas.equals("TI1.1"))
+            .collect(Collectors.toList());
+
+            klasFilter.forEach(student -> System.out.println());
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
