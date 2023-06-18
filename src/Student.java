@@ -1,4 +1,4 @@
-import java.lang.reflect.Array;
+import java.util.List;
 
 class Student {
     public String studentnummer;
@@ -6,14 +6,17 @@ class Student {
     public String klas;
     public String studierichting;
     public String studiejaar;
-    public Array behaaldeCijfers;
+    private List<Vakken> vakken;
 
-    public Student(String studentnummer, String naam, String klas, String studierichting, String studiejaar, Array behaaldeCijfers) {
+    public Student(String studentnummer, String naam, String klas, String studierichting, String studiejaar, List<Vakken> vakken) {
         this.studentnummer = studentnummer;
         this.naam = naam;
         this.klas = klas;
         this.studierichting = studierichting;
         this.studiejaar = studiejaar;
-        this.behaaldeCijfers = behaaldeCijfers;
+        this.vakken = vakken;
+    }
+    public List<Vakken> getVakcode() {
+        return vakken;
     }
 }

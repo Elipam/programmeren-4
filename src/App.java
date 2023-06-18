@@ -14,7 +14,7 @@ public class App {
 
         // ArrayList om de studentgegevens op te slaan
         List<Student> studenten = new ArrayList<>();
-        List<Vakken> behaaldeCijfers = new ArrayList<>();
+        List<Vakken> resultaten = new ArrayList<>();
 
         // JSON-parser initialiseren
         JSONParser parser = new JSONParser();
@@ -26,31 +26,34 @@ public class App {
             // Loop door alle studenten in de JSON-array
             for (Object obj : studentenArray) {
                 JSONObject studentObj = (JSONObject) obj;
-
-                for (Object obje : behaaldeCijfers){
-                    JSONObject studentObje = (JSONObject) obje;
-                    String vakcode = (String) studentObje.get("vakcode");
-                    Integer cijfer = (Integer) studentObje.get("cijfer");
-                    Vakken vakken = new Vakken(vakcode, cijfer);
-                }
-
+                
                 // Studentgegevens uit het JSON-object halen
                 String studentnummer = (String) studentObj.get("studentnummer");
                 String naam = (String) studentObj.get("naam");
                 String klas = (String) studentObj.get("klas");
                 String studierichting = (String) studentObj.get("studierichting");
                 String studiejaar = (String) studentObj.get("studiejaar");
+                
+                JSONArray behaaldeCijfers = (JSONArray) studentObj.get("behaalde_cijfers");
+                for (Object obje : behaaldeCijfers){
+                    JSONObject studentObje = (JSONObject) obje;
+                    String vakcode = (String) studentObje.get("vakcode");
+                    float cijfer = ((Number) studentObje.get("cijfer")).floatValue();
+                    Vakken vak = new Vakken(vakcode, cijfer);
+                    resultaten.add(vak);
+                }
 
                 // Aanmaken van Student-object en toevoegen aan de ArrayList
-                Student student = new Student(studentnummer, naam, klas, studierichting, studiejaar, behaalde_cijfers);
+                Student student = new Student(studentnummer, naam, klas, studierichting, studiejaar, resultaten);
                 studenten.add(student);
             }
 
             List<Student> klasFilter = studenten.stream()
-            .filter(student -> student.klas.equals("TI1.1"))
-            .collect(Collectors.toList());
+                .filter(student -> student.klas.equals("TI1.1"))
+                .collect(Collectors.toList());
 
-            klasFilter.forEach(student -> System.out.println());
+            klasFilter.forEach(student -> System.out.println(student.resultaten));
+            List<Vakken> studentVakken = student.getVakken();
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
