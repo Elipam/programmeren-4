@@ -1,28 +1,19 @@
-class Student {
-    private String studentnummer;
-    private String naam;
-    private String klas;
-    private String studierichting;
-    private String studiejaar;
+import java.lang.reflect.Array;
 
-    public Student(String studentnummer, String naam, String klas, String studierichting, String studiejaar) {
+class Student {
+    public String studentnummer;
+    public String naam;
+    public String klas;
+    public String studierichting;
+    public String studiejaar;
+    public Array behaaldeCijfers;
+
+    public Student(String studentnummer, String naam, String klas, String studierichting, String studiejaar, Array behaaldeCijfers) {
         this.studentnummer = studentnummer;
         this.naam = naam;
         this.klas = klas;
         this.studierichting = studierichting;
         this.studiejaar = studiejaar;
-    }
-
-    // Getters en setters
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "studentnummer='" + studentnummer + '\'' +
-                ", naam='" + naam + '\'' +
-                ", klas='" + klas + '\'' +
-                ", studierichting='" + studierichting + '\'' +
-                ", studiejaar='" + studiejaar + '\'' +
-                '}';
+        this.behaaldeCijfers = behaaldeCijfers;
     }
 }
