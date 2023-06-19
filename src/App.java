@@ -4,7 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class App {
@@ -33,34 +34,45 @@ public class App {
                 String studiejaar = (String) studentObj.get("studiejaar");
 
                 // Resultaten van de student
-                List<Vakken<String, Float>> resultaten = new ArrayList<>();
                 JSONArray behaaldeCijfers = (JSONArray) studentObj.get("behaalde_cijfers");
+                List<Vakken<String, Float, Void>> resultaten = new ArrayList<>();
+
                 for (Object obje : behaaldeCijfers) {
                     JSONObject studentObje = (JSONObject) obje;
                     String vakcode = (String) studentObje.get("vakcode");
                     float cijfer = ((Number) studentObje.get("cijfer")).floatValue();
-                    Vakken<String, Float> vakken = new Vakken<>(vakcode, cijfer);
-                    resultaten.add(vakken);
+                    Vakken<String, Float, Void> vak = new Vakken<>(vakcode, cijfer, null);
+                    resultaten.add(vak);
+                }
+
+                // Vakkenpakket van de student
+                JSONArray vakkenpakketArray = (JSONArray) studentObj.get("vakkenpakket");
+                List<Vakken<String, String, Integer>> vakkenpakket = new ArrayList<>();
+
+                for (Object obje : vakkenpakketArray) {
+                    JSONObject vakkenpakketObj = (JSONObject) obje;
+                    String vakcode = (String) vakkenpakketObj.get("vakcode");
+                    String vaknaam = (String) vakkenpakketObj.get("naam");
+                    int ec = ((Number) vakkenpakketObj.get("ec")).intValue();
+                    Vakken<String, String, Integer> vak = new Vakken<>(vakcode, vaknaam, ec);
+                    vakkenpakket.add(vak);
                 }
 
                 // Aanmaken van Student-object en toevoegen aan de ArrayList
-                Student student = new Student(studentnummer, naam, klas, studierichting, studiejaar, resultaten);
+                Student student = new Student(studentnummer, naam, klas, studierichting, studiejaar, resultaten,
+                        vakkenpakket);
                 studenten.add(student);
             }
 
+            // Filteren op klas TI1.1 en printen van resultaten
             List<Student> klasFilter = studenten.stream()
-                    .filter(student -> student.klas.equals("TI1.1"))
-                    .collect(Collectors.toList());
+                .filter(student -> student.klas.equals("TI1.1"))
+                .collect(Collectors.toList());
 
-            klasFilter.forEach(student -> {
-            System.out.println("Student: " + student.naam);
-            System.out.println("Resultaten:");
-            for (Vakken<String, Float> vakken : student.resultaten) {
-                System.out.println("Vakcode: " + vakken.getVakcode() + ", Cijfer: " + vakken.getCijfer());
+            for (Student student : klasFilter) {
+                System.out.println("Studentnummer: " + student.studentnummer);
+                System.out.println("Naam: " + student.naam);
             }
-            System.out.println();
-            });
-
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }

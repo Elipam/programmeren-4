@@ -1,15 +1,11 @@
-public class Vakken <Thing, Thing2>{
-    public Thing vakcode;
-    public Thing2 cijfer;
+class Vakken <A, B, C>{
+    public A vakcode;
+    public B naamOfCijfer;
+    public C ec;
 
-    public Vakken(Thing vakcode, Thing2 cijfer) {
+    public Vakken(A vakcode, B naamOfCijfer, C ec) {
         this.vakcode = vakcode;
-        this.cijfer = cijfer;
-    }
-    public Thing getVakcode() {
-        return vakcode;
-    }
-    public Thing2 getCijfer() {
-        return cijfer;
+        this.naamOfCijfer = naamOfCijfer;
+        this.ec = ec;
     }
 }
