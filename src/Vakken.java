@@ -1,15 +1,15 @@
-public class Vakken {
-    public String vakcode;
-    public float cijfer;
+public class Vakken <Thing, Thing2>{
+    public Thing vakcode;
+    public Thing2 cijfer;
 
-    public Vakken(String vakcode, float cijfer) {
+    public Vakken(Thing vakcode, Thing2 cijfer) {
         this.vakcode = vakcode;
         this.cijfer = cijfer;
     }
-    public String getVakcode() {
+    public Thing getVakcode() {
         return vakcode;
     }
-    public double getCijfer() {
+    public Thing2 getCijfer() {
         return cijfer;
     }
 }

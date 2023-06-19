@@ -12,10 +12,6 @@ public class App {
         // Bestandsnaam en locatie van het JSON-bestand
         String fileName = "C:\\Users\\eliam\\code\\programmeren 4\\programmeren 4\\src\\studentData_v1.json";
 
-        // ArrayList om de studentgegevens op te slaan
-        List<Student> studenten = new ArrayList<>();
-        List<Vakken> resultaten = new ArrayList<>();
-
         // JSON-parser initialiseren
         JSONParser parser = new JSONParser();
 
@@ -23,24 +19,28 @@ public class App {
             // JSON-bestand inlezen en parsen
             JSONArray studentenArray = (JSONArray) parser.parse(new FileReader(fileName));
 
+            List<Student> studenten = new ArrayList<>();
+
             // Loop door alle studenten in de JSON-array
             for (Object obj : studentenArray) {
                 JSONObject studentObj = (JSONObject) obj;
-                
+
                 // Studentgegevens uit het JSON-object halen
                 String studentnummer = (String) studentObj.get("studentnummer");
                 String naam = (String) studentObj.get("naam");
                 String klas = (String) studentObj.get("klas");
                 String studierichting = (String) studentObj.get("studierichting");
                 String studiejaar = (String) studentObj.get("studiejaar");
-                
+
+                // Resultaten van de student
+                List<Vakken<String, Float>> resultaten = new ArrayList<>();
                 JSONArray behaaldeCijfers = (JSONArray) studentObj.get("behaalde_cijfers");
-                for (Object obje : behaaldeCijfers){
+                for (Object obje : behaaldeCijfers) {
                     JSONObject studentObje = (JSONObject) obje;
                     String vakcode = (String) studentObje.get("vakcode");
                     float cijfer = ((Number) studentObje.get("cijfer")).floatValue();
-                    Vakken vak = new Vakken(vakcode, cijfer);
-                    resultaten.add(vak);
+                    Vakken<String, Float> vakken = new Vakken<>(vakcode, cijfer);
+                    resultaten.add(vakken);
                 }
 
                 // Aanmaken van Student-object en toevoegen aan de ArrayList
@@ -49,11 +49,17 @@ public class App {
             }
 
             List<Student> klasFilter = studenten.stream()
-                .filter(student -> student.klas.equals("TI1.1"))
-                .collect(Collectors.toList());
+                    .filter(student -> student.klas.equals("TI1.1"))
+                    .collect(Collectors.toList());
 
-            klasFilter.forEach(student -> System.out.println(student.resultaten));
-            List<Vakken> studentVakken = student.getVakken();
+            klasFilter.forEach(student -> {
+            System.out.println("Student: " + student.naam);
+            System.out.println("Resultaten:");
+            for (Vakken<String, Float> vakken : student.resultaten) {
+                System.out.println("Vakcode: " + vakken.getVakcode() + ", Cijfer: " + vakken.getCijfer());
+            }
+            System.out.println();
+            });
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
