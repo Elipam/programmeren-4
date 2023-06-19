@@ -10,30 +10,23 @@ import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args) {
-        // Bestandsnaam en locatie van het JSON-bestand
         String fileName = "C:\\Users\\eliam\\code\\programmeren 4\\programmeren 4\\src\\studentData_v1.json";
-
-        // JSON-parser initialiseren
         JSONParser parser = new JSONParser();
 
         try {
-            // JSON-bestand inlezen en parsen
             JSONArray studentenArray = (JSONArray) parser.parse(new FileReader(fileName));
 
             List<Student> studenten = new ArrayList<>();
 
-            // Loop door alle studenten in de JSON-array
             for (Object obj : studentenArray) {
                 JSONObject studentObj = (JSONObject) obj;
 
-                // Studentgegevens uit het JSON-object halen
                 String studentnummer = (String) studentObj.get("studentnummer");
                 String naam = (String) studentObj.get("naam");
                 String klas = (String) studentObj.get("klas");
                 String studierichting = (String) studentObj.get("studierichting");
                 String studiejaar = (String) studentObj.get("studiejaar");
 
-                // Resultaten van de student
                 JSONArray behaaldeCijfers = (JSONArray) studentObj.get("behaalde_cijfers");
                 List<Vakken<String, Float, Void>> resultaten = new ArrayList<>();
 
@@ -45,7 +38,6 @@ public class App {
                     resultaten.add(vak);
                 }
 
-                // Vakkenpakket van de student
                 JSONArray vakkenpakketArray = (JSONArray) studentObj.get("vakkenpakket");
                 List<Vakken<String, String, Integer>> vakkenpakket = new ArrayList<>();
 
@@ -58,21 +50,60 @@ public class App {
                     vakkenpakket.add(vak);
                 }
 
-                // Aanmaken van Student-object en toevoegen aan de ArrayList
-                Student student = new Student(studentnummer, naam, klas, studierichting, studiejaar, resultaten,
-                        vakkenpakket);
+                Student student = new Student(studentnummer, naam, klas, studierichting, studiejaar, resultaten, vakkenpakket);
                 studenten.add(student);
             }
 
-            // Filteren op klas TI1.1 en printen van resultaten
-            List<Student> klasFilter = studenten.stream()
-                .filter(student -> student.klas.equals("TI1.1"))
-                .collect(Collectors.toList());
+            String testStudentNummer = "7654422";
+            String testVak = "ECO101";
+            List<Student> filter = studenten.stream()
+                // .filter(student -> student.klas.equals("TI1.1"))                                         
+                // .collect(Collectors.toList());
+                // for (Student student : filter) {                                                             
+                //     System.out.println(student.naam);
+                // }
+                                      
+                // .filter(student -> student.vakkenpakket.stream()                                        
+                //     .anyMatch(vak -> vak.naamOfCijfer.equals("Engels 1")))                               
+                // .collect(Collectors.toList());
+                // for (Student student : filter) {                                                             
+                //     System.out.println(student.naam);
+                // }
+                
+                // .filter(student -> student.studentnummer.equals(testStudentNummer))
+                // .collect(Collectors.toList());
+                // for (Student student : filter) { 
+                //     for (Vakken vak : student.vakkenpakket) {
+                //         System.out.println(vak.vakcode);
+                //         System.out.println(vak.naamOfCijfer);
+                //         System.out.println(vak.ec);
+                //     }
+                // }
 
-            for (Student student : klasFilter) {
-                System.out.println("Studentnummer: " + student.studentnummer);
-                System.out.println("Naam: " + student.naam);
-            }
+                // .filter(student -> student.studentnummer.equals(testStudentNummer))
+                // for (Student student : filter) {
+                //     for (Vakken vak : student.resultaten) {
+                //         float cijfer = (float) vak.naamOfCijfer;
+                //         if (cijfer < 5.5) {
+                //             System.out.println(vak.vakcode);
+                //             System.out.println(vak.naamOfCijfer);
+                //         }
+                //     }
+                // }
+
+                .filter(student -> student.resultaten.stream()                                        
+                    .anyMatch(vak -> vak.vakcode.equals(testVak)))                               
+                .collect(Collectors.toList());
+                for (Student student : filter) {                                                             
+                    for (Vakken vak : student.resultaten) {
+                        float cijfer = (float) vak.naamOfCijfer;
+                        String vakcode = (String) vak.vakcode;
+                        if (cijfer > 5.5 && vakcode.equals(testVak)) {
+                            System.out.println(student.naam);
+                        }
+                    }
+                }
+
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
