@@ -57,14 +57,14 @@ public class App {
             String testVak = "WI101";
             String testKlas = "TI1.1";
 
-            Filters.inKlas(studenten, testKlas);
-            Filters.vakVolgen(studenten, testVak);
-            Filters.vakkenPakket(studenten, testStudentNummer);
-            Filters.nogHalen(studenten, testStudentNummer);
-            Filters.gemiddeldeVak(studenten, testVak);
-            Filters.gewogenGemiddelde(studenten, testStudentNummer);
-            Filters.percentageBehaald(studenten, testVak);
-            Filters.wanneerKlaar(studenten, testStudentNummer);
+            // Filters.inKlas(studenten, testKlas);
+            // Filters.vakVolgen(studenten, testVak);
+            // Filters.vakkenPakket(studenten, testStudentNummer);
+            // Filters.nogHalen(studenten, testStudentNummer);
+            // Filters.gemiddeldeVak(studenten, testVak);
+            // Filters.gewogenGemiddelde(studenten, testStudentNummer);
+            // Filters.percentageBehaald(studenten, testVak);
+            // Filters.wanneerKlaar(studenten, testStudentNummer);
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
