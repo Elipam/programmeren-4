@@ -19,9 +19,4 @@ class Student {
         this.resultaten = resultaten;
         this.vakkenpakket = vakkenpakket;
     }
-
-    public String getNaam() {
-        return naam;
-    }
-
 }

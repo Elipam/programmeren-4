@@ -5,6 +5,13 @@
             "name": "App",
             "request": "launch",
             "mainClass": "App",
+            "projectName": "programmeren-4_987e27e8"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
             "projectName": "programmeren 4_572d3f4d"
         },
         {
