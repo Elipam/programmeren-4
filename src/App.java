@@ -55,7 +55,7 @@ public class App {
             }
 
             String testStudentNummer = "7654422";
-            String testVak = "ECO101";
+            String testVak = "WI101";
             List<Student> filter = studenten.stream()
                 // .filter(student -> student.klas.equals("TI1.1"))                                         
                 // .collect(Collectors.toList());
@@ -91,18 +91,20 @@ public class App {
                 //     }
                 // }
 
-                .filter(student -> student.resultaten.stream()                                        
-                    .anyMatch(vak -> vak.vakcode.equals(testVak)))                               
-                .collect(Collectors.toList());
-                for (Student student : filter) {                                                             
-                    for (Vakken vak : student.resultaten) {
-                        float cijfer = (float) vak.naamOfCijfer;
-                        String vakcode = (String) vak.vakcode;
-                        if (cijfer > 5.5 && vakcode.equals(testVak)) {
-                            System.out.println(student.naam);
-                        }
-                    }
-                }
+                // .filter(student -> student.resultaten.stream()                                        
+                //     .anyMatch(vak -> vak.vakcode.equals(testVak)))                               
+                // .collect(Collectors.toList());
+                // for (Student student : filter) {                                                             
+                //     for (Vakken vak : student.resultaten) {
+                //         float cijfer = (float) vak.naamOfCijfer;
+                //         String vakcode = (String) vak.vakcode;
+                //         if (cijfer > 5.5 && vakcode.equals(testVak)) {
+                //             System.out.println(student.naam);
+                //         }
+                //     }
+                // }
+
+                
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
