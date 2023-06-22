@@ -54,16 +54,17 @@ public class App {
             }
 
             String testStudentNummer = "7654422";
-            String testVak = "WI101";
-            String testKlas = "TI1.1";
+            String testVakCode = "WI101";
+            String testKlas = "TI2.2";
 
             // Filters.inKlas(studenten, testKlas);
-            // Filters.vakVolgen(studenten, testVak);
+            // Filters.vakVolgen(studenten, testVakCode);
             // Filters.vakkenPakket(studenten, testStudentNummer);
             // Filters.nogHalen(studenten, testStudentNummer);
-            // Filters.gemiddeldeVak(studenten, testVak);
+            // Filters.vakkenGehaald(studenten, testVakCode);
+            // Filters.gemiddeldeVak(studenten, testVakCode);
             // Filters.gewogenGemiddelde(studenten, testStudentNummer);
-            // Filters.percentageBehaald(studenten, testVak);
+            // Filters.percentageBehaald(studenten, testVakCode);
             // Filters.wanneerKlaar(studenten, testStudentNummer);
 
         } catch (IOException | ParseException e) {

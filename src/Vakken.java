@@ -8,4 +8,8 @@ class Vakken <A, B, C>{
         this.naamOfCijfer = naamOfCijfer;
         this.ec = ec;
     }
+
+    public B getNaamOfCijfer() {
+        return naamOfCijfer;
+    }
 }
