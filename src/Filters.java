@@ -52,12 +52,11 @@ public class Filters {
                 System.out.println();
             }
         }
-
     }
 
     public static void nogHalen(List<Student> studenten, String testStudentNummer) {             
         List<Vakken<String, Float, Void>> filter2 = haalStdNummer(studenten, testStudentNummer).stream()
-        .flatMap(student -> student.resultaten().stream())
+        .flatMap(student -> student.getResultaten().stream())
         .filter(vak -> vak.getNaamOfCijfer() < 5.5)
         .toList();
 
@@ -96,7 +95,7 @@ public class Filters {
 
     public static void gemiddeldeVak(List<Student> studenten, String testVak){
         List<Vakken<String, Float, Void>> filter2 = haalVak(studenten, testVak).stream()
-        .flatMap(student -> student.resultaten().stream())
+        .flatMap(student -> student.getResultaten().stream())
         .filter(vak -> vak.vakcode.equals(testVak))
         .toList();
         for (Vakken<String, Float, Void> vak : filter2) {                                                             
@@ -124,7 +123,7 @@ public class Filters {
 
     public static void percentageBehaald(List<Student> studenten, String testVak){
         List<Vakken<String, Float, Void>> filter2 = haalVak(studenten, testVak).stream()
-        .flatMap(student -> student.resultaten().stream())
+        .flatMap(student -> student.getResultaten().stream())
         .filter(vak -> vak.vakcode.equals(testVak))
         .toList();
         for (Vakken<String, Float, Void> vak : filter2) {                                                             

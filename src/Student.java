@@ -20,15 +20,11 @@ class Student {
         this.vakkenpakket = vakkenpakket;
     }
 
-    public List<Vakken<String,String,Integer>> getVakkenpakket() {
-        return vakkenpakket;
-    }
-
     public String getStudentnummer() {
         return studentnummer;
     }
 
-    public List<Vakken<String, Float, Void>> resultaten() {
+    public List<Vakken<String, Float, Void>> getResultaten() {
         return resultaten;
     }
 }
