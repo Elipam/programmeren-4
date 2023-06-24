@@ -72,6 +72,7 @@ public class App {
             String testVakCode = "TI201";
             String testKlas = "TI2.2";
 
+            Administratie.klasOfVak(studenten, testKlas);
             // Administratie.inKlas(studenten, testKlas);
             // Administratie.vakVolgen(studenten, testVakCode);
             // Administratie.vakkenPakket(studenten, testStudentNummer);
@@ -79,7 +80,7 @@ public class App {
             // Administratie.vakkenGehaald(studenten, testVakCode);
             // Administratie.gemiddeldeVak(studenten, testVakCode);
             // Administratie.gewogenGemiddelde(studenten, testStudentNummer);
-            Administratie.percentageBehaald(studenten, testVakCode);
+            // Administratie.percentageBehaald(studenten, testVakCode);
             // Administratie.wanneerKlaar(studenten, testStudentNummer);
 
         } catch (IOException | ParseException e) {

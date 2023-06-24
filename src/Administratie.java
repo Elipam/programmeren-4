@@ -1,5 +1,7 @@
 // Eliam Traas - 1003233
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Administratie {
     private static int totaalStudiePunten = 0;
@@ -10,16 +12,16 @@ public class Administratie {
     private static String hold;
     private static boolean bool = true;
 
-    // filter op doorgegeven studentnummer door middel van een stream
     public static List<Student> haalStdNummer(List<Student> studenten, String testStudentNummer){
+        // filter op doorgegeven studentnummer door middel van een stream
         List<Student> filter = studenten.stream()
         .filter(student -> student.getStudentnummer().equals(testStudentNummer))
         .toList();
         return filter;
     }
 
-    // filter op doorgegeven vak door middel van een stream
     public static List<Student> haalVak(List<Student> studenten, String testVak){
+        // filter op doorgegeven vak door middel van een stream
         List<Student> filter = studenten.stream()
         .filter(student -> student.getResultaten().stream()                                        
         .anyMatch(vak -> vak.getVakcode().equals(testVak)))                               
@@ -27,30 +29,55 @@ public class Administratie {
         return filter;
     }
 
-    // filter voor het vinden van studenten in doorgegeven klas
-    public static void inKlas(List<Student> studenten, String testKlas){
+    public static <T> void klasOfVak(List<Student> studenten, T a) {  
+        // filter voor het vinden van studenten in doorgegeven klas
         List<Student> filter = studenten.stream()
-        .filter(student -> student.getKlas().equals(testKlas))                                         
+        .filter(student -> student.getKlas().equals((String) a))                                         
         .toList();
-        //print elke student in filter
-        for (Student student : filter) {             
-            System.out.println(student.getNaam());
+
+        List<Student> filter2 = studenten.stream()
+        .filter(student -> student.getVakkenpakket().stream()                                        
+        .anyMatch(vak -> vak.getVakcode().equals(a)))                               
+        .toList();    
+            
+        if (filter.size() == 0) {
+            // filter om te checken of studenten een vak volgen
+            for (Student student : filter2) {                                                             
+                System.out.println(student.getNaam());
+            }    
+        }
+        else{
+            //print elke student in filter
+            for (Student student : filter) {             
+                System.out.println(student.getNaam());
+            }
         }
     }
 
-    // filter om te checken of studenten een vak volgen
-    public static void vakVolgen(List<Student> studenten, String testVak){
-        List<Student> filter = studenten.stream()
-        .filter(student -> student.getVakkenpakket().stream()                                        
-        .anyMatch(vak -> vak.getVakcode().equals(testVak)))                               
-        .toList();        
-        for (Student student : filter) {                                                             
-            System.out.println(student.getNaam());
-        }    
-    }
-
-    // filter op studentnummer 
+    // public static void inKlas(List<Student> studenten, String testKlas){
+    //     // filter voor het vinden van studenten in doorgegeven klas
+    //     List<Student> filter = studenten.stream()
+    //     .filter(student -> student.getKlas().equals(testKlas))                                         
+    //     .toList();
+    //     //print elke student in filter
+    //     for (Student student : filter) {             
+    //         System.out.println(student.getNaam());
+    //     }
+    // }
+    
+    // public static void vakVolgen(List<Student> studenten, String testVak){
+    //     // filter om te checken of studenten een vak volgen
+    //     List<Student> filter = studenten.stream()
+    //     .filter(student -> student.getVakkenpakket().stream()                                        
+    //     .anyMatch(vak -> vak.getVakcode().equals(testVak)))                               
+    //     .toList();        
+    //     for (Student student : filter) {                                                             
+    //         System.out.println(student.getNaam());
+    //     }    
+    // }
+    
     public static void vakkenPakket(List<Student> studenten, String testStudentNummer){
+        // filter op studentnummer 
         for (Student student : haalStdNummer(studenten, testStudentNummer)) { 
             // print voor elk vak in vakkenpakket van gefilterde student
             for (Vak<String,String,Integer> vak : student.getVakkenpakket()) {
@@ -62,8 +89,8 @@ public class Administratie {
         }
     }
 
-    // filter op studentnummer
     public static void nogHalen(List<Student> studenten, String testStudentNummer) {             
+        // filter op studentnummer
         List<Vak<String, Float, Void>> filter2 = haalStdNummer(studenten, testStudentNummer).stream()
         .flatMap(student -> student.getResultaten().stream())
         // filter de cijfers in resultaten van gefilterde student
@@ -99,8 +126,8 @@ public class Administratie {
         }
     }
 
-    // filter op bepaald vak en check of vak gehaald is
     public static void vakkenGehaald(List<Student> studenten, String testVak){
+        // filter op bepaald vak en check of vak gehaald is
         List<Student> filter = studenten.stream()   
         .filter(student -> student.getResultaten().stream()                                        
         .anyMatch(vak -> vak.getVakcode().equals(testVak) && vak.getNaamOfCijfer() >= 5.5))                               
@@ -110,8 +137,8 @@ public class Administratie {
         }
     }
 
-    // filter op bepaald vak
     public static void gemiddeldeVak(List<Student> studenten, String testVak){
+        // filter op bepaald vak
         List<Vak<String, Float, Void>> filter2 = haalVak(studenten, testVak).stream()
         // stream voor vakken ipv studenten
         .flatMap(student -> student.getResultaten().stream())
@@ -124,8 +151,8 @@ public class Administratie {
         System.out.println(temp/tel);
     }
 
-    // filter op student nummer met minder streams, want ik kan niet vakkenpakket en resultaten tegelijk streamen 
     public static void gewogenGemiddelde(List<Student> studenten, String testStudentNummer){
+        // filter op student nummer met minder streams, want ik kan niet vakkenpakket en resultaten tegelijk streamen 
         for (Student student : haalStdNummer(studenten, testStudentNummer)) {
             for (Vak<String,Float,Void> vak : student.getResultaten()) {
                 for (Vak<String,String,Integer> vak2 : student.getVakkenpakket()) {
@@ -168,8 +195,8 @@ public class Administratie {
         System.out.println(tel + max);
     }
 
-    // filter op studentnummer
     public static void wanneerKlaar(List<Student> studenten, String testStudentNummer){
+        // filter op studentnummer
         for (Student student : haalStdNummer(studenten, testStudentNummer)) {
             for (Vak<String,String,Integer> vak2 : student.getVakkenpakket()) {
                 // bereken totaal studiepunten
